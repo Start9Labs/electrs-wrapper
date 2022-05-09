@@ -14,7 +14,7 @@ Note: You will need to be running Tor on your device, find guides to set this up
 
     ![Tor](./assets/bitbox2.png)
 
-1. Back out and Click on "Connect your own full node"
+1. Back out and click on "Connect your own full node"
 
     ![Full Node](./assets/bitbox3.png)
 
