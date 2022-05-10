@@ -1,9 +1,21 @@
-# Instructions for electrs
+# Electrum Rust Server (electrs)
 
-## Why electrs?
+`electrs` is an efficient re-implementation of Electrum Server written in Rust. Its main purpose is as an indexer for external wallets that use bitcoind as a backend. There are all sorts of wallets that connect to bitcoind using the Electrum protocol. This Embassy package allows you to run your own electrum server connected to your own Bitcoin Core node, which is the most private, uncensorable, yet fast and easy way to use Bitcoin.
+In order to link a wallet, check out the guides at https://github.com/start9labs/electrs-wrapper/tree/master/docs/wallets.md.
+# Syncing
 
-Electrs is an "Electrum Server."  This is a tool that allows for deeper insight into the Bitcoin blockchain, by keeping an index that allows querying of UTXOs by address.  This is extremely useful if you are running your own block explorer (such as mempool.space on your Embassy), and electrum servers can also be used to link wallets to your Bitcoin full node.  In order to link a wallet, check out the guides at https://github.com/chrisguida/electrs-wrapper/tree/master/docs/wallets.md.
+**WARNING: Make sure you have at least a gigabyte of free RAM before starting Electrs. If you don't, your system will grind to a halt and you will be very unhappy. Pay especially close attention if you're running Mastodon and you have a 4GB system. We recommend that you temporarily stop any services that use lots of RAM, especially Mastodon and Synapse. Keep in mind that Bitcoin Core will also use more RAM than usual during this initial sync.**
 
-## Setup
+When you first start Electrs, it will start building the indexes it needs in order to serve transactions to the wallets that subscribe to it. Electrs will not be usable until after this process completes. On an Embassy, this shouldn't take more than about a day.
 
-To use electrs, you will require at minimum Bitcoin Core, and you may optionally use Bitcoin Proxy.  Upon install, electrs will require an auto-configuration of Bitcoin/Proxy.  Depending on your existing configuration, a resync of Bitcoin may be required (a full archival node with txindex turned on is necessary).  Following this, electrs will have its own sync, followed by a compaction of data.  You are then ready to use electrs!
+Once your electrum server is synced, it will start listening for subscriptions from external wallets.
+
+# Configuration
+
+Electrs on the Embassy requires a fully synced archival Bitcoin Core node as a source for blockchain data. It uses both the RPC interface and the peer interface of `bitcoind` in order to function. This requirement will be automatically enforced by EmbassyOS.
+
+**Bitcoin Core vs Bitcoin Proxy**
+
+If you choose Internal (Bitcoin Proxy) as your blockchain source, when Electrum makes RPC requests, these will go through Bitcoin Proxy instead of directly to Bitcoin Core. This allows you to control access to your bitcoin node by Electrs and any wallets that are using it.
+
+Note that if you use Proxy as your RPC server, your internal Bitcoin Core node will still be needed as Electrs pulls data from the bitcoin p2p protocol as well, and Proxy does not support serving data via the bitcoin p2p protocol.
