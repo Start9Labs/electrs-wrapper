@@ -2,7 +2,7 @@
 
 Note: You will need to be running Tor on your device, find guides to set this up here: https://start9.com/latest/user-manual/connecting/connecting-tor/tor-os/index
 
-1. Open Trezor and click on the gear icon in the top left to enter the Settings.
+1. Open Trezor and click on the gear icon in the top right to enter the Settings.
 
     ![Trezor Settings](./assets/trezor0.png "Trezor Settings icon")
 
