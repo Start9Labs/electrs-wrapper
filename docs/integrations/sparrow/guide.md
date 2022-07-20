@@ -1,7 +1,5 @@
 # Sparrow Integration Setup
 
-Note: You will need to be running Tor on your device, find guides to set this up here: https://start9.com/latest/user-manual/connecting/connecting-tor/tor-os/index
-
 1. Open Sparrow and go to "File -> Preferences -> Server," or if you are running for the first time, proceed through the introduction until the screen below.  Then select "Configure Server."
 
     ![Configure Server](./assets/sparrow0.png)
@@ -10,7 +8,7 @@ Note: You will need to be running Tor on your device, find guides to set this up
 
     ![Electrum Server](./assets/sparrow1.png)
     
-1. Enter your electrs Tor address (found in your Embassy's electrs service page, under "Interfaces"), removing the "http://" prefix.  Enable "Use Proxy" and then enter "127.0.0.1" for the address and "9050" for the port.
+1. Enter your electrs Tor address (found in your Embassy's electrs service page, under "Interfaces"), removing the "http://" prefix.  Sparrow ships with a built in tor, which it will automatically use once you entered a .onion into the Electrum server URL text field, so ensure that "Use Proxy" is disabled.
 
     ![Server Setup](./assets/sparrow2.png)
 
