@@ -1,5 +1,11 @@
 # Sparrow Integration Setup
 
+Note: At least on Linux and MacOS, you will need to NOT be running a native Tor on your device for Sparrow to connect to a .onion address.  Please shut down Tor if it is running:
+
+    Linux: sudo systemctl stop tor
+    
+    MacOS: sudo brew services stop tor
+
 1. Open Sparrow and go to "File -> Preferences -> Server," or if you are running for the first time, proceed through the introduction until the screen below.  Then select "Configure Server."
 
     ![Configure Server](./assets/sparrow0.png)
