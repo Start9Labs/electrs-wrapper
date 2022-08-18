@@ -1,11 +1,8 @@
-# v0.3.0 and up Manifest example written in yaml (toml and json are also acceptable)
-
 id: electrs
 title: "electrs"
-version: 0.9.7.1
+version: 0.9.9
 release-notes: |
-  * New/improved wallet integration guides for BitBox, BlueWallet, Electrum, Sparrow, and Trezor
-  * Switch to using new eOS APIs for faster configuration and properties
+  * Update upstream to [v0.9.9](https://github.com/romanz/electrs/releases/tag/v0.9.9)
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-wrapper"
 upstream-repo: "https://github.com/romanz/electrs"
@@ -83,7 +80,7 @@ dependencies:
     version: ">=0.3.2.1 <0.4.0"
     requirement:
       type: "opt-out"
-      how: Set "Bitcoin Core" to "Internal (Bitcoin Core)" or "External"
+      how: Set "Bitcoin Core" to 'Bitcoin Core'"
     description: Provides bitcoin rpc interface needed for info about fees, blockchain, mempool, network, and transactions. Can also use bitcoind for rpc interface, or an external node for both.
     config:
       check:
@@ -130,20 +127,10 @@ backup:
       main: /data
 migrations:
   from:
-    "<=0.9.7.1":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
+    "*":
+      type: script
+      args: ["from"]
   to:
-    "<=0.9.7.1":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
+    "*":
+      type: script
+      args: ["to"]

@@ -1,3 +1,0 @@
-bitcoind:
-  condition: '''bitcoind.type = "internal" OR ''bitcoind.type = "internal-proxy"'
-  health_checks: ["synced"]
