@@ -24,6 +24,6 @@ https://start9.com/latest/user-manual/connecting/connecting-tor/tor-os/index
 
 ![Nunchuk mobile settings](assets/mobile-1.png)
 
-2. Enter your electrs Hostname and Port (found in your Embassy's electrs service page, under "Properties") into the "Mainnet server" field. Tote that if your electrs is ssl enabled, you should prefix it with `ssl://`.
+2. Enter your electrs Hostname and Port (found in your Embassy's electrs service page, under "Properties") into the "Mainnet server" field. Note that if your electrs is ssl enabled, you should prefix it with `ssl://`.
 
 ![Nunchuk mobile network settings](assets/mobile-2.png)
