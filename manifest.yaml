@@ -1,7 +1,8 @@
 id: electrs
 title: "electrs"
-version: 0.9.13
+version: 0.9.13.1
 release-notes: |
+  * Update electrs-wrapper tag to v0.9.13.1
   * Update upstream electrs to [v0.9.13](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0913-mar-31-2023)
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-wrapper"
