@@ -1,9 +1,9 @@
 id: electrs
 title: "electrs"
-version: 0.9.13.1
+version: 0.9.14
 release-notes: |
-  * Update electrs-wrapper tag to v0.9.13.1
-  * Update upstream electrs to [v0.9.13](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0913-mar-31-2023)
+  * Update upstream electrs to [v0.9.14](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0914-jun-10-2023)
+  * Update Docker image to bullseye-slim
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-wrapper"
 upstream-repo: "https://github.com/romanz/electrs"
@@ -11,7 +11,7 @@ support-site: "https://github.com/romanz/electrs/issues"
 marketing-site: "https://github.com/romanz/electrs"
 build: ["make"]
 description:
-  short: An efficient re-implementation of Electrum Server in Rust 
+  short: An efficient re-implementation of Electrum Server in Rust
   long: |
     An efficient re-implementation of Electrum Server, inspired by ElectrumX, Electrum Personal Server and bitcoincore-indexd. The motivation behind this project is to enable a user to self host an Electrum server, with required hardware resources not much beyond those of a full node. The server indexes the entire Bitcoin blockchain, and the resulting index enables fast queries for any given user wallet, allowing the user to keep real-time track of balances and transaction history using the Electrum wallet. Since it runs on the users own machine, there is no need for the wallet to communicate with external Electrum servers, thus preserving the privacy of the users addresses and balances.
 assets:

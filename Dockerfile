@@ -11,7 +11,7 @@ COPY ./electrs .
 
 RUN cargo install --locked --path .
 
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 RUN apt update && apt install -y ca-certificates
 
