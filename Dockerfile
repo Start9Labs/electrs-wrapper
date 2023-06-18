@@ -1,4 +1,4 @@
-FROM rust:1.48.0-slim AS builder
+FROM rust:1.70.0-slim AS builder
 
 ARG VERSION
 
