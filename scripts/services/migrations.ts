@@ -5,7 +5,7 @@ export const migration: T.ExpectedExports.migration =
     {
       "0.9.14.2": {
         up: compat.migrations.updateConfig(
-          (config) => {
+          (config: any) => {
             return {
               "electrum-tor-address": config["electrum-tor-address"],
               ...config.bitcoind,
@@ -16,7 +16,7 @@ export const migration: T.ExpectedExports.migration =
           { version: "0.9.14.2", type: "up" }
         ),
         down: compat.migrations.updateConfig(
-          (config) => {
+          (config: any) => {
             return {
               "electrum-tor-address": config["electrum-tor-address"],
               bitcoind: {

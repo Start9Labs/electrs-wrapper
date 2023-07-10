@@ -46,7 +46,7 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   "index-batch-size": {
     type: "number",
     name: "Index Batch Size",
-    placeholder: "10",
+    placeholder: 10,
     description:
       "Maximum number of blocks to request from bitcoind per batch. Defaults to 10.",
     nullable: true,
@@ -57,7 +57,7 @@ export const getConfig: T.ExpectedExports.getConfig = compat.getConfig({
   "index-lookup-limit": {
     type: "number",
     name: "Index Lookup Limit",
-    placeholder: "200",
+    placeholder: 200,
     description:
       "Number of transactions to lookup before returning an error, to prevent 'too popular' addresses from causing the RPC server to time out. Defaults to 200.",
     nullable: true,
