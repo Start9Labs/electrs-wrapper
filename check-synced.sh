@@ -7,8 +7,8 @@ else
  set -e
  
  b_host="bitcoind.embassy"
- b_username=$(yq e '.bitcoind.user' /data/start9/config.yaml)
- b_password=$(yq e '.bitcoind.password' /data/start9/config.yaml)
+ b_username=$(yq e '.user' /data/start9/config.yaml)
+ b_password=$(yq e '.password' /data/start9/config.yaml)
  
  #Get blockchain info from the bitcoin rpc
  b_gbc_result=$(curl -sS --user $b_username:$b_password --data-binary '{"jsonrpc": "1.0", "id": "sync-hck", "method": "getblockchaininfo", "params": []}' -H 'content-type: text/plain;' http://$b_host:8332/ 2>&1)
