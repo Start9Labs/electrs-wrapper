@@ -6,16 +6,9 @@ if (($DURATION <= 9000 )); then
 else
  set -e
  
- b_type=$(yq e '.bitcoind.type' /data/start9/config.yaml)
- if [ "$b_type" = "internal" ]; then
-    b_host="bitcoind.embassy"
-    b_username=$(yq e '.bitcoind.user' /data/start9/config.yaml)
-    b_password=$(yq e '.bitcoind.password' /data/start9/config.yaml)
- else
-    b_host=$(yq e '.bitcoind.connection-settings.address' /data/start9/config.yaml)
-    b_username=$(yq e '.bitcoind.connection-settings.user' /data/start9/config.yaml)
-    b_password=$(yq e '.bitcoind.connection-settings.password' /data/start9/config.yaml)
- fi
+ b_host="bitcoind.embassy"
+ b_username=$(yq e '.bitcoind.user' /data/start9/config.yaml)
+ b_password=$(yq e '.bitcoind.password' /data/start9/config.yaml)
  
  #Get blockchain info from the bitcoin rpc
  b_gbc_result=$(curl -sS --user $b_username:$b_password --data-binary '{"jsonrpc": "1.0", "id": "sync-hck", "method": "getblockchaininfo", "params": []}' -H 'content-type: text/plain;' http://$b_host:8332/ 2>&1)
