@@ -1,6 +1,6 @@
 id: electrs
 title: "electrs"
-version: 0.9.14.1
+version: 0.9.14.2
 release-notes: |
   * Update upstream electrs to [v0.9.14](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0914-jun-10-2023)
   * Update Docker image to bullseye-slim
