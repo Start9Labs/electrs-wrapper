@@ -3,7 +3,7 @@ import { compat, types as T } from "../deps.ts";
 export const migration: T.ExpectedExports.migration =
   compat.migrations.fromMapping(
     {
-      "0.9.14.3": {
+      "0.9.14.2": {
         up: compat.migrations.updateConfig(
           (config: any) => {
             return {
@@ -13,7 +13,7 @@ export const migration: T.ExpectedExports.migration =
             };
           },
           true,
-          { version: "0.9.14.3", type: "up" }
+          { version: "0.9.14.2", type: "up" }
         ),
         down: compat.migrations.updateConfig(
           (config: any) => {
@@ -31,7 +31,7 @@ export const migration: T.ExpectedExports.migration =
             };
           },
           true,
-          { version: "0.9.14.3", type: "down" }
+          { version: "0.9.14.2", type: "down" }
         ),
       },
     },

@@ -24,15 +24,8 @@ cd electrs-wrapper
 make
 ```
 
-## Sideload onto your Embassy
+See the [Develper Docs](https://docs.start9.com/latest/developer-docs/packaging) for more information.
 
-SSH into an Embassy device.
-`scp` the `.s9pk` to any directory from your local machine.
-Run the following command to determine successful install:
+## Sideload onto StartOS
 
-```
-scp electrs.s9pk root@embassy-<id>.local:/embassy-data/package-data/tmp # Copy the S9PK to the external disk
-ssh root@embassy-<id>.local
-embassy-cli auth login
-embassy-cli package install electrs.s9pk # Install the sideloaded package
-```
+Select `System > Sideload Service` from the web UI.
