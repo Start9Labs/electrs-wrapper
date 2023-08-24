@@ -12,8 +12,8 @@ https://start9.com/latest/user-manual/connecting/connecting-tor/tor-os/index
 
 1. Select `Electrum Server`
 
-1. Fill in your electrs `Hostname` from your Embassy's `Services -> Electrs -> Properties` page, to BlueWallet's host field
+1. Fill in your electrs `Hostname` from your StartOS's `Services -> Electrs -> Properties` page, to BlueWallet's host field
 
-1. Fill in your electrs `Port` from your Embassy's `Services -> Electrs -> Properties` page, to BlueWallet's port field.  50001 is electrs' default port.
+1. Fill in your electrs `Port` from your StartOS's `Services -> Electrs -> Properties` page, to BlueWallet's port field.  50001 is electrs' default port.
 
 1. Select 'Save'
