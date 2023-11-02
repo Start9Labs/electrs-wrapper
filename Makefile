@@ -9,10 +9,10 @@ TS_FILES := $(shell find . -name \*.ts )
 all: verify
 
 verify: $(PKG_ID).s9pk
-	embassy-sdk verify s9pk $(PKG_ID).s9pk
+	start-sdk verify s9pk $(PKG_ID).s9pk
 
 install: $(PKG_ID).s9pk
-	embassy-cli package install $(PKG_ID).s9pk
+	start-cli package install $(PKG_ID).s9pk
 
 clean:
 	rm -f image.tar
@@ -22,14 +22,14 @@ clean:
 
 # for rebuilding just the arm image. will include docker-images/x86_64.tar into the s9pk if it exists
 arm: docker-images/aarch64.tar scripts/embassy.js
-	embassy-sdk pack
+	start-sdk pack
 
 # for rebuilding just the x86 image. will include docker-images/aarch64.tar into the s9pk if it exists
 x86: docker-images/x86_64.tar scripts/embassy.js
-	embassy-sdk pack
+	start-sdk pack
 
 $(PKG_ID).s9pk: manifest.yaml instructions.md scripts/embassy.js electrs/LICENSE docker-images/aarch64.tar docker-images/x86_64.tar
-	embassy-sdk pack
+	start-sdk pack
 
 docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh check-synced.sh check-electrum.sh configurator/target/aarch64-unknown-linux-musl/release/configurator $(ELECTRS_SRC)
 	mkdir -p docker-images
