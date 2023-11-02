@@ -35,5 +35,5 @@ export const migration: T.ExpectedExports.migration =
         ),
       },
     },
-    "0.10.0"
+    "0.10.1"
   );
