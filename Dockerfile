@@ -1,28 +1,31 @@
-FROM rust:1.70.0-slim AS builder
+FROM rust:1.73-slim-bookworm AS builder
 
-ARG VERSION
+RUN apt-get update -qqy && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
+    clang \
+    cmake \
+    librocksdb-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
-
-RUN apt-get update
-RUN apt-get install -y git clang cmake libsnappy-dev
-
 COPY ./electrs .
+ENV ROCKSDB_INCLUDE_DIR=/usr/include
+ENV ROCKSDB_LIB_DIR=/usr/lib
+RUN rustup toolchain install nightly
+RUN cargo +nightly install --locked --path .
 
-RUN cargo install --locked --path .
+FROM debian:bookworm-slim AS final
 
-FROM debian:bullseye-slim
+RUN apt-get update -qqy && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
+    bash \
+    curl \
+    netcat-openbsd \
+    tini \
+    yq && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt update && apt install -y ca-certificates
-
-#Let debian repos be fetched securely:
-RUN sed -i "s/http:\/\//https:\/\//g" /etc/apt/sources.list
-
-RUN apt update && apt upgrade -y && apt install -y bash curl netcat tini wget
-
-ARG PLATFORM
 ARG ARCH
-RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 COPY --from=builder /usr/local/cargo/bin/electrs /bin/electrs
 
