@@ -26,6 +26,8 @@ RUN apt-get update -qqy && \
     rm -rf /var/lib/apt/lists/*
 
 ARG ARCH
+ARG PLATFORM
+RUN curl -skLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 COPY --from=builder /usr/local/cargo/bin/electrs /bin/electrs
 
