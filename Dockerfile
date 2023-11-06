@@ -1,6 +1,7 @@
 FROM rust:1.73-slim-bookworm AS builder
 
 RUN apt-get update -qqy && \
+    apt-get upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
     clang \
     cmake \
@@ -17,17 +18,19 @@ RUN cargo +nightly install --locked --path .
 FROM debian:bookworm-slim AS final
 
 RUN apt-get update -qqy && \
+    apt-get upgrade && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
     bash \
     curl \
-    netcat-openbsd \
     tini \
-    yq && \
+    netcat-openbsd \
+    ca-certificates \
+    librocksdb7.8 && \
     rm -rf /var/lib/apt/lists/*
 
 ARG ARCH
 ARG PLATFORM
-RUN curl -skLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
+RUN curl -sLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 
 COPY --from=builder /usr/local/cargo/bin/electrs /bin/electrs
 
