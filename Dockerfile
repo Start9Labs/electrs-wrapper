@@ -1,12 +1,12 @@
-FROM rust:1.73-slim-bookworm AS builder
+FROM rust:1.76-slim-bookworm AS builder
 
 RUN apt-get update -qqy && \
-    apt-get upgrade && \
+    apt-get upgrade -qqy && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
     clang \
     cmake \
     librocksdb-dev && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 WORKDIR /build
 COPY ./electrs .
@@ -18,7 +18,7 @@ RUN cargo +nightly install --locked --path .
 FROM debian:bookworm-slim AS final
 
 RUN apt-get update -qqy && \
-    apt-get upgrade && \
+    apt-get upgrade -qqy && \
     DEBIAN_FRONTEND=noninteractive apt-get install -qqy --no-install-recommends \
     bash \
     curl \
@@ -26,7 +26,7 @@ RUN apt-get update -qqy && \
     netcat-openbsd \
     ca-certificates \
     librocksdb7.8 && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 ARG ARCH
 ARG PLATFORM

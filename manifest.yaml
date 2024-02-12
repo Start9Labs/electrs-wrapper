@@ -1,8 +1,9 @@
 id: electrs
 title: "electrs"
-version: 0.10.2
+version: 0.10.3
 release-notes: |
-  * Update upstream electrs to [v0.10.2](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0102-dec-31-2023)
+  * Update upstream electrs to [v0.10.3](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0103-feb-10-2024)
+  * Update rust docker image
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-wrapper"
 upstream-repo: "https://github.com/romanz/electrs"
