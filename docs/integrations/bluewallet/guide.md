@@ -1,10 +1,6 @@
 # BlueWallet Integration Setup
 
-You will need to be running Tor on your iOS or Android device. Find guides to set this up here:
-
-https://start9.com/latest/user-manual/connecting/connecting-tor/tor-os/index
-
-_NOTE_: The macOS release of BlueWallet cannot connect to a Tor service and is therefore not supported.
+**Warning:** You will need to download and run [Orbot-Tor VPN](https://orbot.app/en/) on your iOS, Android or macOS device.
 
 1. Select the Settings 'kebab' / ellipsis menu at the top right of the app
 
