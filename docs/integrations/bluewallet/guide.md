@@ -12,6 +12,7 @@
 
 1. Fill in your electrs `Port` from the StartOS `Services -> electrs -> Properties` page, to BlueWallet's port field. 50001 is electrs' default port.
 
-NOTE: Alternatively, you can use `Scan or import a file` and scan the QR code from `Services > Electrs > Properties > Quick Connect URL`.
-
 1. Select 'Save'.
+
+ NOTE: Alternatively, you can use `Scan or import a file` and scan the QR code from `Services > Electrs > Properties > Quick Connect URL`.
+
