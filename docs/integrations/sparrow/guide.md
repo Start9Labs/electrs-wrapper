@@ -1,6 +1,6 @@
 # Sparrow Integration Setup
 
-1. Open Sparrow and go to "File -> Preferences -> Server" or if you are running for the first time, proceed through the introduction until the screen below. Then select "Configure Server":
+1. Open Sparrow and go to "File -> Preferences -> Server" or if you are running Sparrow for the first time, proceed through the introduction until the screen below. Then select "Configure Server":
 
    ![Configure Server](./assets/sparrow0.png)
 
