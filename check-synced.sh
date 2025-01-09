@@ -68,7 +68,7 @@ else
         else
             #Check to make sure the electrs RPC is actually up and responding
             features_res=$(echo '{"jsonrpc": "2.0", "method": "server.features", "params": ["", "1.4"], "id": 0}' | netcat -w 1 127.0.0.1 50001)
-            server_string=$(echo $featres_res | yq '.result.server_version')
+            server_string=$(echo "$features_res" | yq '.result.server_version')
             if [ -n "$server_string" ] ; then
                 #Index is synced to tip
                 exit 0
