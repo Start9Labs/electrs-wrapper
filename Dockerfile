@@ -34,22 +34,6 @@ RUN curl -sLo /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/
 
 COPY --from=builder /usr/local/cargo/bin/electrs /bin/electrs
 
-ADD ./configurator/target/${ARCH}-unknown-linux-musl/release/configurator /usr/local/bin/configurator
-ADD ./docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
-RUN chmod a+x /usr/local/bin/docker_entrypoint.sh
-ADD ./check-electrum.sh /usr/local/bin/check-electrum.sh
-RUN chmod a+x /usr/local/bin/check-electrum.sh
-ADD ./check-synced.sh /usr/local/bin/check-synced.sh
-RUN chmod a+x /usr/local/bin/check-synced.sh
-
 WORKDIR /data
 
-# Electrum RPC
-EXPOSE 50001
-
-# Prometheus monitoring
-EXPOSE 4224
-
 STOPSIGNAL SIGINT
-
-ENTRYPOINT ["docker_entrypoint.sh"]

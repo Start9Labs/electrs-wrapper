@@ -1,48 +1,33 @@
-ELECTRS_SRC := $(shell find ./electrs/src) electrs/Cargo.toml electrs/Cargo.lock
-CONFIGURATOR_SRC := $(shell find ./configurator/src) configurator/Cargo.toml configurator/Cargo.lock
-PKG_VERSION := $(shell yq ".version" manifest.yaml)
-PKG_ID := $(shell yq ".id" manifest.yaml)
-TS_FILES := $(shell find . -name \*.ts )
+PACKAGE_ID := electrs
 
-.DELETE_ON_ERROR:
+# Phony targets
+.PHONY: all clean install
 
-all: verify
+# Default target
+all: ${PACKAGE_ID}.s9pk
 
-verify: $(PKG_ID).s9pk
-	start-sdk verify s9pk $(PKG_ID).s9pk
+# Build targets
+${PACKAGE_ID}.s9pk: $(shell start-cli s9pk list-ingredients)
+	start-cli s9pk pack
 
-install: $(PKG_ID).s9pk
-	start-cli package install $(PKG_ID).s9pk
+javascript/index.js: $(shell find startos -name "*.ts" ) tsconfig.json node_modules package.json
+	npm run build
 
+node_modules: package.json package-lock.json
+	npm ci
+
+package-lock.json: package.json
+	npm i
+
+# Clean target
 clean:
-	rm -rf docker-images
-	rm -f $(PKG_ID).s9pk
-	rm -f scripts/*.js
+	rm -rf ${PACKAGE_ID}.s9pk
+	rm -rf javascript
+	rm -rf node_modules
 
-# for rebuilding just the arm image. will include docker-images/x86_64.tar into the s9pk if it exists
-arm: docker-images/aarch64.tar scripts/embassy.js
-	start-sdk pack
-
-# for rebuilding just the x86 image. will include docker-images/aarch64.tar into the s9pk if it exists
-x86: docker-images/x86_64.tar scripts/embassy.js
-	start-sdk pack
-
-$(PKG_ID).s9pk: manifest.yaml instructions.md scripts/embassy.js electrs/LICENSE docker-images/aarch64.tar docker-images/x86_64.tar
-	start-sdk pack
-
-docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh check-synced.sh check-electrum.sh configurator/target/aarch64-unknown-linux-musl/release/configurator $(ELECTRS_SRC)
-	mkdir -p docker-images
-	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=aarch64 --build-arg PLATFORM=arm64 --platform=linux/arm64 -o type=docker,dest=docker-images/aarch64.tar .
-
-docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh check-synced.sh check-electrum.sh configurator/target/x86_64-unknown-linux-musl/release/configurator $(ELECTRS_SRC)
-	mkdir -p docker-images
-	docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --build-arg ARCH=x86_64 --build-arg PLATFORM=amd64 --platform=linux/amd64 -o type=docker,dest=docker-images/x86_64.tar .
-
-configurator/target/aarch64-unknown-linux-musl/release/configurator: $(CONFIGURATOR_SRC)
-	docker run --rm -it -v ~/.cargo/registry:/root/.cargo/registry -v "$(shell pwd)"/configurator:/home/rust/src messense/rust-musl-cross:aarch64-musl cargo build --release
-
-configurator/target/x86_64-unknown-linux-musl/release/configurator: $(CONFIGURATOR_SRC)
-	docker run --rm -it -v ~/.cargo/registry:/root/.cargo/registry -v "$(shell pwd)"/configurator:/home/rust/src messense/rust-musl-cross:x86_64-musl cargo build --release
-
-scripts/embassy.js: $(TS_FILES)
-	deno bundle scripts/embassy.ts scripts/embassy.js
+# Install target
+install:
+	@if [ ! -f ~/.startos/config.yaml ]; then echo "You must define \"host: http://server-name.local\" in ~/.startos/config.yaml config file first."; exit 1; fi
+	@echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n"
+	@[ -f $(PACKAGE_ID).s9pk ] || ( $(MAKE) && echo "\nInstalling to $$(grep -v '^#' ~/.startos/config.yaml | cut -d'/' -f3) ...\n" )
+	@start-cli package install -s $(PACKAGE_ID).s9pk
