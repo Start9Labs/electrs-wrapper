@@ -1,4 +1,4 @@
-FROM rust:1.83-slim-bookworm AS builder
+FROM rust:1.84.1-slim-bookworm AS builder
 
 RUN apt-get update -qqy && \
     apt-get upgrade -qqy && \
@@ -43,12 +43,6 @@ ADD ./check-synced.sh /usr/local/bin/check-synced.sh
 RUN chmod a+x /usr/local/bin/check-synced.sh
 
 WORKDIR /data
-
-# Electrum RPC
-EXPOSE 50001
-
-# Prometheus monitoring
-EXPOSE 4224
 
 STOPSIGNAL SIGINT
 
