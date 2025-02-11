@@ -1,9 +1,10 @@
 id: electrs
 title: "electrs"
-version: 0.10.8
+version: 0.10.9
 release-notes: |
-  * Update upstream electrs to [v0.10.8](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0108-dec-30-2024)
+  * Update upstream electrs to [v0.10.9](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0109-feb-01-2025)
   * Update Rust base Docker image
+  * Make some parts of the check-synced healthcheck script (io)nice
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-startos"
 upstream-repo: "https://github.com/romanz/electrs"

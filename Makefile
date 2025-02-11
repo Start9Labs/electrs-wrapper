@@ -16,6 +16,7 @@ install: $(PKG_ID).s9pk
 
 clean:
 	rm -rf docker-images
+	rm -rf image.tar
 	rm -f $(PKG_ID).s9pk
 	rm -f scripts/*.js
 
@@ -45,4 +46,4 @@ configurator/target/x86_64-unknown-linux-musl/release/configurator: $(CONFIGURAT
 	docker run --rm -it -v ~/.cargo/registry:/root/.cargo/registry -v "$(shell pwd)"/configurator:/home/rust/src messense/rust-musl-cross:x86_64-musl cargo build --release
 
 scripts/embassy.js: $(TS_FILES)
-	deno bundle scripts/embassy.ts scripts/embassy.js
+	deno run --allow-read --allow-write --allow-env --allow-net scripts/bundle.ts
