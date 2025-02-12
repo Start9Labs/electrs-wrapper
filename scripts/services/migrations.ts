@@ -34,6 +34,52 @@ export const migration: T.ExpectedExports.migration =
           { version: "0.9.14.2", type: "down" }
         ),
       },
+      "0.10.8.1": {
+        up: compat.migrations.updateConfig(
+          (config: any) => {
+            switch (config.type) {
+              case "internal-proxy":
+                config.type = "bitcoind-proxy";
+                break;
+              default:
+                config.type = "bitcoind";
+                break;
+            }
+            config.bitcoind = {
+              type: config.type,
+              username: config.user,
+              password: config.password,
+            };
+
+            delete config.user;
+            delete config.password;
+
+            return config;
+          },
+          true,
+          { version: "0.10.8.1", type: "up" }
+        ),
+        down: compat.migrations.updateConfig(
+          (config: any) => {
+            switch (config.bitcoind.type) {
+              case "bitcoind-proxy":
+                config.type = "internal-proxy";
+                break;
+              default:
+                config.type = "internal";
+                break;
+            }
+            config.user = config.bitcoind.username;
+            config.password = config.bitcoind.password;
+
+            delete config.bitcoind;
+
+            return config;
+          },
+          true,
+          { version: "0.10.8.1", type: "down" }
+        ),
+      },
     },
-    "0.10.9"
+    "0.10.9.1"
   );

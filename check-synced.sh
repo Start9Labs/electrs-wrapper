@@ -1,17 +1,36 @@
 #!/bin/bash
+# vim: ts=2 sw=2 sts=2 ai et
 
 DURATION=$(</dev/stdin)
 if (($DURATION <= 9000 )); then
     exit 60
 else
  set -e
- 
- b_host="bitcoind.embassy"
- b_username=$(yq '.user' /data/start9/config.yaml)
- b_password=$(yq '.password' /data/start9/config.yaml)
+
+b_type=$(yq '.bitcoind.type' /data/start9/config.yaml)
+
+if [ "$b_type" == "bitcoind-testnet" ]; then
+  b_host="bitcoind-testnet.embassy"
+  b_rpc_port=48332
+  e_monitoring_port=44224
+  e_db_path=/data/db/testnet4
+elif [ "$b_type" == "bitcoind-proxy" ]; then
+  b_host="btc-rpc-proxy.embassy"
+  b_rpc_port=8332
+  e_monitoring_port=4224
+  e_db_path=/data/db/bitcoin
+else
+  b_host="bitcoind.embassy"
+  b_rpc_port=8332
+  e_monitoring_port=4224
+  e_db_path=/data/db/bitcoin
+fi
+
+ b_username=$(yq '.bitcoind.username' /data/start9/config.yaml)
+ b_password=$(yq '.bitcoind.password' /data/start9/config.yaml)
  
  #Get blockchain info from the bitcoin rpc
- b_gbc_result=$(curl -sS --user $b_username:$b_password --data-binary '{"jsonrpc": "1.0", "id": "sync-hck", "method": "getblockchaininfo", "params": []}' -H 'content-type: text/plain;' http://$b_host:8332/ 2>&1)
+ b_gbc_result=$(curl -sS --user $b_username:$b_password --data-binary '{"jsonrpc": "1.0", "id": "sync-hck", "method": "getblockchaininfo", "params": []}' -H 'content-type: text/plain;' http://$b_host:$b_rpc_port/ 2>&1)
  error_code=$?
  b_gbc_error=$(echo $b_gbc_result | yq '.error' -)
  if [[ $error_code -ne 0 ]]; then
@@ -37,7 +56,7 @@ else
     exit 61
  else
     #Gather keys/values from prometheus rpc:
-    curl_res=$(curl -sS localhost:4224)
+    curl_res=$(curl -sS localhost:$e_monitoring_port 2>/dev/null)
     error_code=$?
     
     if [[ $error_code -ne 0 ]]; then
