@@ -1,11 +1,11 @@
 id: electrs
 title: "electrs"
-version: 0.10.8.1
+version: 0.10.9.1
 release-notes: |
-  * Update electrs-wrapper tag to v0.10.8.1
-  * Added support for testnet4 and restored support for btc-rpc-proxy
-  * Update upstream electrs to [v0.10.8](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0108-dec-30-2024)
+  * Update electrs-wrapper tag to v0.10.9.1, added support for testnet4
+  * Update upstream electrs to [v0.10.9](https://github.com/romanz/electrs/blob/master/RELEASE-NOTES.md#0109-feb-01-2025)
   * Update Rust base Docker image
+  * Make some parts of the check-synced healthcheck script (io)nice
 license: mit
 wrapper-repo: "https://github.com/Start9Labs/electrs-startos"
 upstream-repo: "https://github.com/romanz/electrs"
@@ -78,7 +78,7 @@ alerts:
   start: "INSTABILITY WARNING: Electrs uses up to 1GB of RAM when syncing. Please make sure you have at least this much free RAM before starting Electrs, or you will cause your system to become unresponsive! This is especially risky if running alongside services that consume a lot of RAM on a 4GB system!"
 dependencies:
   bitcoind:
-    version: ">=0.21.1.2 <29.0.0"
+    version: ">=0.21.1.2 <30.0.0"
     requirement:
       type: "opt-out"
       how: Set "Bitcoin Core" to "Bitcoin Core"

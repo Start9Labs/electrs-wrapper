@@ -69,9 +69,9 @@ fi
     #^The prometheus RPC's num-running-compactions key doesn't seem to correspond to actual
     # compaction events, so we'll determine compaction by another, dumber but accurate method:
     chk_numlines=100000 #Look through the last 100,000 lines of the db LOG
-    log_file="$e_db_path/LOG"
-    tail_log="tail -$chk_numlines $log_file"
-    compaction_job=$($tail_log|grep EVENT_LOG|grep "ManualCompaction"|tail -1|cut -d" " -f7)
+    log_file="/data/db/bitcoin/LOG"
+    tail_log="ionice -c3 tail -$chk_numlines $log_file"
+    compaction_job=$($tail_log|nice -n19 grep EVENT_LOG|nice -n19 grep "ManualCompaction"|nice -n19 tail -1|nice -n19 cut -d" " -f7)
     if [ -n "$compaction_job" ] ; then
         compaction_job_is_done=$($tail_log|grep "\"job\": $compaction_job \"event\": \"compaction_finished\""|wc -l)
         if [[ $compaction_job_is_done -eq 0 ]] ; then
